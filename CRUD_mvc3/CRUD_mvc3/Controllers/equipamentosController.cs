@@ -46,16 +46,26 @@ namespace CRUD_mvc3.Controllers
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "cnpj")] equipamentos equipamentos)
+        public ActionResult SalvarEquipamento([Bind(Include = "cnpj")] equipamentos equipamentos)
         {
-            if (ModelState.IsValid)
+            
+
+            if (!string.IsNullOrEmpty(equipamentos.nome))
             {
-                db.Equipamentos.Add(equipamentos);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    db.Equipamentos.Add(equipamentos);
+                    db.SaveChanges();
+                    return Content("Salvo com sucesso...");
+                }
+                catch (Exception e) {
+                    return Content("Erro ao salvar");
+                }
             }
 
-            return View(equipamentos);
+            return Content("Equipamento inválido!");
+
+            //return View(equipamentos);
         }
 
         // GET: equipamentos/Edit/5

@@ -7,10 +7,10 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>equipamentos</h4>
         <hr />
@@ -18,7 +18,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.tipo, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.tipo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.tipo, new { htmlAttributes = new { @class = "form-control tipo" } })
                 @Html.ValidationMessageFor(model => model.tipo, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -26,7 +26,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.nome, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.nome, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.nome, new { htmlAttributes = new { @class = "form-control Nome" } })
                 @Html.ValidationMessageFor(model => model.nome, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -34,7 +34,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.logradouro, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.logradouro, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.logradouro, new { htmlAttributes = new { @class = "form-control logradouro" } })
                 @Html.ValidationMessageFor(model => model.logradouro, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -42,7 +42,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.qsa, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.qsa, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.qsa, new { htmlAttributes = new { @class = "form-control qsa" } })
                 @Html.ValidationMessageFor(model => model.qsa, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -50,7 +50,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.cnpj, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.cnpj, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.cnpj, new { htmlAttributes = new { @class = "form-control cnpj" } })
                 @Html.ValidationMessageFor(model => model.cnpj, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -58,14 +58,15 @@
         <div class="form-group">
             @Html.LabelFor(model => model.equipamento, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.equipamento, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.equipamento, new { htmlAttributes = new { @class = "form-control equipamento" } })
                 @Html.ValidationMessageFor(model => model.equipamento, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                @*<input type="submit" value="Create" class="btn btn-default" />*@
+                <button type="button" class="btn btn-default" id="create">Create</button>
             </div>
         </div>
     </div>
@@ -78,3 +79,44 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+<script type="text/javascript" src="~/Scripts/jquery-3.4.1.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="~/Scripts/Funcionalidades.js"></script>
+
+
+<script>
+
+
+    $(document).on("click", "#create", function () {
+
+        let Cnpj = $(".cnpj").val();
+        let Qsa = $(".qsa").val();
+        let Logradouro = $(".logradouro").val();
+        let Nome = $(".Nome").val();
+        let equipamento = $(".equipamento").val();
+        let tipo = $(".tipo").val();
+
+
+        form = new FormData();
+        form.append("equipamentos.cnpj", Cnpj);
+        form.append("equipamentos.qsa", Qsa);
+        form.append("equipamentos.logradouro", Logradouro);
+        form.append("equipamentos.nome", Nome);
+        form.append("equipamentos.equipamento", equipamento);
+        form.append("equipamentos.tipo", tipo);
+
+
+        mdusa.serverCall(@Url.Action("SalvarEquipamento","equipamentos"), form, function (data) {
+
+            alert(data);
+
+        });
+
+
+    });
+
+
+
+
+</script>
